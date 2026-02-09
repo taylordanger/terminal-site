@@ -1,0 +1,24 @@
+body{
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #000;
+    color: #0f0;
+    margin: 0;
+    padding: 20px;
+}
+#root{
+    box-sizing:border-box;
+    height:100vh;
+    overflow:auto;
+    padding:20px;
+}
+input{
+    background-color: transparent;
+    border: none;
+    color: #0f0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    outline: 2px solid #0f0 !important;
+    padding: 5px;
+    width: 100%;
+}
