@@ -195,3 +195,27 @@ body{font-family: 'Fira Code', 'Courier New', Courier, monospace}
 }
 
 .terminal-block::before{content:"";display:block;height:6px}
+
+/* Flash effect when typing completes */
+@keyframes typedFlash {
+    0% {
+        box-shadow: inset 0 0 30px rgba(0,255,0,0.02);
+        background: linear-gradient(180deg,#001100,#001400);
+        transform: translateY(0);
+    }
+    35% {
+        box-shadow: 0 0 30px rgba(51,255,102,0.32), inset 0 0 40px rgba(51,255,102,0.08);
+        background: linear-gradient(180deg,#07320b,#084215);
+        transform: translateY(-3px);
+    }
+    100% {
+        box-shadow: inset 0 0 30px rgba(0,255,0,0.02);
+        background: linear-gradient(180deg,#001100,#001400);
+        transform: translateY(0);
+    }
+}
+
+.typed-flash{
+    animation: typedFlash 700ms cubic-bezier(.2,.9,.2,1) 1 both;
+    border-color: rgba(51,255,102,0.18);
+}
