@@ -19,29 +19,58 @@ const embedImagesBtn = document.querySelector("#embed-images");
 const externalImagesDiv = document.querySelector("#external-images");
 
 function openWinbox(title, mountEl) {
-    new Winbox({
+    new WinBox({
         title,
         width: "700px",
-        height: "60vh",
+        height: "618vh",
         top: 50,
         right: 50,
         bottom: 50,
         left: 50,
         mount: mountEl,
         border: true,
-        borderColor: "#0f0",
+        borderColor: "#000",
         borderwidth: "2px",
+        background: "#000",
 
         onfocus: function () {
             this.setBackground("#0f0");
     }
 }
 );
+    // If the mounted element contains a terminal-style pre, animate its typing
+    // delay slightly to ensure Winbox has mounted the element into the DOM
+    setTimeout(() => {
+        try {
+            animateTerminal(mountEl);
+        } catch (e) {
+            /* ignore */
+        }
+    }, 220);
 }
 
-if (whoamiBtn && aboutWhoami) whoamiBtn.addEventListener("click", () => openWinbox("Whoami", aboutWhoami));
-if (repositoriesBtn && aboutRepositories) repositoriesBtn.addEventListener("click", () => openWinbox("Repositories", aboutRepositories));
-if (demosBtn && aboutDemos) demosBtn.addEventListener("click", () => openWinbox("Demos", aboutDemos));
+    if (whoamiBtn && aboutWhoami) whoamiBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    console.log('whoami clicked');
+    aboutWhoami.classList.add('mounted');
+    aboutWhoami.style.visibility = 'visible';
+    aboutWhoami.style.height = 'auto';
+    openWinbox("Whoami", aboutWhoami);
+});
+    if (repositoriesBtn && aboutRepositories) repositoriesBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    aboutRepositories.classList.add('mounted');
+    aboutRepositories.style.visibility = 'visible';
+    aboutRepositories.style.height = 'auto';
+    openWinbox("Repositories", aboutRepositories);
+});
+    if (demosBtn && aboutDemos) demosBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    aboutDemos.classList.add('mounted');
+    aboutDemos.style.visibility = 'visible';
+    aboutDemos.style.height = 'auto';
+    openWinbox("Demos", aboutDemos);
+});
 
 // GitHub fetching
 async function fetchRepos(username) {
@@ -117,6 +146,43 @@ function embedImageUrls(urls) {
         wrapper.appendChild(img);
         externalImagesDiv.appendChild(wrapper);
     });
+}
+
+// Typing animation for terminal-like pre blocks
+function animateTerminal(container, speed = 12) {
+    if (!container) return;
+    console.log('animateTerminal called, container:', container && container.id);
+    let pre = container.querySelector && container.querySelector('.terminal-block');
+    // If Winbox moved the node or the container doesn't contain it anymore,
+    // fall back to finding the first visible terminal-block in the document.
+    if (!pre) {
+        const all = Array.from(document.querySelectorAll('.terminal-block'));
+        pre = all.find((el) => el.offsetWidth > 0 || el.offsetHeight > 0) || all[0];
+    }
+    if (!pre) return;
+    console.log('terminal pre found:', pre);
+    // If already typed, do a quick flash instead
+    if (pre.dataset.typed === 'true') {
+        pre.classList.add('typed-flash');
+        setTimeout(() => pre.classList.remove('typed-flash'), 300);
+        return;
+    }
+
+    const full = pre.textContent || '';
+    pre.dataset.full = full;
+    pre.textContent = '';
+    pre.dataset.typed = 'false';
+    let i = 0;
+    const timer = setInterval(() => {
+        pre.textContent += full.charAt(i);
+        pre.scrollTop = pre.scrollHeight;
+        i++;
+        if (i >= full.length) {
+            clearInterval(timer);
+            pre.dataset.typed = 'true';
+            console.log('typing finished');
+        }
+    }, speed);
 }
 
 // Events

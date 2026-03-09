@@ -32,13 +32,53 @@
         </nav>
 
         <main class="container">
+          
             <!-- Hidden mount points for Winbox windows -->
-            <div id="about-whoami" style="display:none">
-                <h2>About Me</h2>
-                <p>bio here</p>
+            <div id="about-whoami" style="display:true">
+                <h2></h2>
+                <pre class="terminal-block">$ cat ~/profile
+ Name:     Taylor
+ Role:     Embedded Systems Engineer / Firmware Developer
+ Focus:    ESP32 • FreeRTOS • e‑paper UI • Modern C++
+ Location: Remote / Hybrid
+ Status:   Open for hire
+
+$ grep -r "capabilities" ~/skills/core.h
+ ESP32           : enabled
+ Modern C++      : enabled
+ E‑paper         : enabled
+ Real‑time (RT)  : enabled
+ UI Architecture : enabled
+
+---
+
+System Overview
+
+$ ./run_diagnostics.sh --stack
+╔═══════════════════════[ TECH STACK ]════════════════════════╗
+║                                                             ║
+║  PROGRAMMING                                                ║
+║  • C/C++            █████████████████   Expert              ║
+║  • Python           ███████████████░░   Advanced            ║
+║  • TypeScript       █████████████░░░░   Proficient          ║
+║  • Rust             ███████░░░░░░░░░    Learning            ║
+║                                                             ║
+║  EMBEDDED & HARDWARE                                        ║
+║  • ESP32 / ESP‑IDF   █████████████████   Expert             ║
+║  • FreeRTOS         ███████████████░░    Advanced           ║
+║  • Arduino          █████████████████    Expert             ║
+║  • E‑paper Displays ███████████████░░    Specialist         ║
+║                                                             ║
+║  TOOLING                                                   ║
+║  • Git/GitHub       █████████████████    Advanced           ║
+║  • CMake            █████████████░░░░    Proficient         ║
+║  • CI/CD            ███████████░░░░░     Intermediate       ║
+║                                                             ║
+╚═════════════════════════════════════════════════════════════╝
+</pre>
             </div>
 
-                        <div id="about-repositories" style="display:none">
+                        <div id="about-repositories" style="display:true">
                                 <h2>Repositories</h2>
                                 <label for="github-username">GitHub username:</label>
                                 <input id="github-username" value="taylordanger" />
