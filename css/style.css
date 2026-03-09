@@ -45,8 +45,8 @@ input{
     padding: 5px;
     width: 100%;
 } 
+/**/
 
-**/
 
 
 body{
@@ -147,4 +147,4 @@ body{font-family: 'Fira Code', 'Courier New', Courier, monospace}
 
 /* subtle caret animation for headings */
 .caret{display:inline-block;width:8px;background:#33ff66;margin-left:6px;height:16px;vertical-align:middle;animation:blink 1s steps(2,end) infinite}
-@keyframes blink{50%{opacity:0}}
+@keyframes blink{70%{opacity:0}}

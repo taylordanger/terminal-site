@@ -28,7 +28,15 @@ function openWinbox(title, mountEl) {
         bottom: 50,
         left: 50,
         mount: mountEl,
-    });
+        border: true,
+        borderColor: "#0f0",
+        borderwidth: "2px",
+
+        onfocus: function () {
+            this.setBackground("#0f0");
+    }
+}
+);
 }
 
 if (whoamiBtn && aboutWhoami) whoamiBtn.addEventListener("click", () => openWinbox("Whoami", aboutWhoami));
@@ -79,6 +87,15 @@ function renderRepos(repos) {
         .join("");
 
     githubReposNodes.forEach((node) => (node.innerHTML = html || "<div>No repos found.</div>"));
+
+    // Add a small reveal animation to repo cards
+    setTimeout(() => {
+        githubReposNodes.forEach((node) => {
+            node.querySelectorAll('.repo-card').forEach((c, i) => {
+                setTimeout(() => c.classList.add('visible'), i * 50);
+            });
+        });
+    }, 50);
 }
 
 // External image embedding
