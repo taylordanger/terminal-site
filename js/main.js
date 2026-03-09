@@ -164,7 +164,12 @@ function animateTerminal(container, speed = 12) {
     // If already typed, do a quick flash instead
     if (pre.dataset.typed === 'true') {
         pre.classList.add('typed-flash');
-        setTimeout(() => pre.classList.remove('typed-flash'), 300);
+        // remove after animation ends (with fallback)
+        pre.addEventListener('animationend', function _rem() {
+            pre.classList.remove('typed-flash');
+            pre.removeEventListener('animationend', _rem);
+        }, { once: true });
+        setTimeout(() => pre.classList.remove('typed-flash'), 900);
         return;
     }
 
@@ -181,6 +186,14 @@ function animateTerminal(container, speed = 12) {
             clearInterval(timer);
             pre.dataset.typed = 'true';
             console.log('typing finished');
+            // flash to indicate typing completed
+            pre.classList.add('typed-flash');
+            pre.addEventListener('animationend', function _end() {
+                pre.classList.remove('typed-flash');
+                pre.removeEventListener('animationend', _end);
+            }, { once: true });
+            // fallback removal in case animationend doesn't fire
+            setTimeout(() => pre.classList.remove('typed-flash'), 900);
         }
     }, speed);
 }
