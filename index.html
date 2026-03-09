@@ -1,41 +1,73 @@
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css" />
-    <title>Sheppard Semiconductor Systems</title>
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/style.css" />
+        <title>Portfolio</title>
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
     </head>
+
     <body>
-        <div class="container">
-            <nav>
-                <ul>
-                    <li id="Whoami">/Whoami</li>
-                    <li id="contact">/Whereami</li>
-                    <li id="repositories">/Repositories</li>
-                    <li id="demos">/DEMOS</li>
-                    <li id="project talking snake">/Project Talking Snake</li>
-                </ul>
-            </nav>
-        </di>>
+        <header class="menu">
+            <div class="buttons-flex">
+                <div class="button red"></div>
+                <div class="button yellow"></div>
+                <div class="button green"></div>
+            </div>
+            <div class="title">
+                <a href="https://github.com/taylordanger" target="_blank">
+                    <h1>github.com/taylordanger</h1>
+                </a>
+            </div>
+        </header>
 
- 
-    <div class="menu">
-      <div class="buttons-flex">
-      <div class="button red"></div>
-      <div class="button yellow"></div>
-      <div class="button green"></div>
-    </div>
-    <div class="title">
-      <a href="https://github.com/taylordanger" target="_blank"><h1><i class='fab fa-github'></i> github.com/taylordanger</h1></a>
-    </div>
-    </div>
-    <div id="app">
-    </div>
-  </div>
+        <nav>
+            <ul>
+                <li><a id="whoami" href="#">/Whoami</a></li>
+                <li><a id="repositories" href="#">/Repositories</a></li>
+                <li><a id="demos" href="#">/DEMOS</a></li>
+            </ul>
+        </nav>
 
-  <script src="scripts/main.js"></script>  
-      </body>
+        <main class="container">
+            <!-- Hidden mount points for Winbox windows -->
+            <div id="about-whoami" style="display:none">
+                <h2>About Me</h2>
+                <p>Put a short bio here. Customize this content in the DOM.</p>
+            </div>
+
+            <div id="about-repositories" style="display:none">
+                <h2>Repositories</h2>
+                <label for="github-username">GitHub username:</label>
+                <input id="github-username" value="taylordanger" />
+                <label for="github-token" style="margin-top:8px;display:block">GitHub token (optional):</label>
+                <input id="github-token" type="password" placeholder="Personal access token (optional)" />
+                <div style="margin-top:6px;display:flex;gap:8px;align-items:center">
+                    <label style="display:flex;gap:6px;align-items:center"><input id="save-token" type="checkbox" /> Save token to this device</label>
+                    <button id="fetch-repos">Fetch Repos</button>
+                </div>
+                <div id="github-repos"></div>
+            </div>
+
+            <div id="about-demos" style="display:none">
+                <h2>Demos & Embedded Images</h2>
+                <p>Paste image URLs (one per line) to embed below:</p>
+                <textarea id="image-urls" rows="4" style="width:100%"></textarea>
+                <button id="embed-images">Embed Images</button>
+                <div id="external-images" style="margin-top:12px"></div>
+            </div>
+
+            <!-- Default visible content: quick repo list -->
+            <section id="quick-repos">
+                <h2>Latest Repositories</h2>
+                <div id="github-repos"></div>
+            </section>
+        </main>
+
+        <!-- Winbox (bundled) and main script -->
+        <script src="js/winbox.bundle.js"></script>
+        <script src="js/main.js"></script>
+    </body>
 </html>

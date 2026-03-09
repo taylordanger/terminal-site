@@ -11,7 +11,7 @@
 	
 	background-color: #000;
 }
-body{
+/**body{
     -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
     font-family: 'Courier New', Courier, monospace;
     background-color: #000;
@@ -46,10 +46,10 @@ input{
     width: 100%;
 } 
 
+**/
 
 
-
-/** body{
+body{
     -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
     font-family: 'Courier New', Courier, monospace;
     background-color: #000;
@@ -65,7 +65,7 @@ input{
 }
 input{
     background-color: transparent;
-    border: none;
+    border: 2px solid #0f0;
     color: #0f0;
     font-family: 'Courier New', Courier, monospace;
     font-size: 16px;
@@ -73,3 +73,78 @@ input{
     padding: 5px;
     width: 100%;
 } 
+
+/* Terminal / shell theme */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap');
+html, body {
+    height: 100%;
+}
+.container{
+    max-width: 960px;
+    margin: 18px auto;
+    padding: 18px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.85), rgba(3,3,3,0.98));
+    border: 1px solid rgba(0,255,0,0.12);
+    box-shadow: 0 8px 30px rgba(0,255,0,0.03);
+    border-radius: 6px;
+}
+
+header.menu{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:14px;
+}
+.buttons-flex{display:flex;gap:6px;align-items:center}
+.button{width:12px;height:12px;border-radius:50%;box-shadow:0 0 6px rgba(0,255,0,0.04)}
+.button.red{background:#ff5f56}
+.button.yellow{background:#ffbd2e}
+.button.green{background:#27c93f}
+
+.title h1{font-size:1rem;color:#33ff66;margin:0}
+
+nav ul{display:flex;gap:12px;list-style:none;margin:12px 0;padding:0}
+nav ul li{color:#39ff14;padding:0;border-radius:4px}
+nav ul li a{display:inline-block;padding:6px 10px;color:#39ff14;border:1px solid rgba(57,255,20,0.06);border-radius:4px;text-decoration:none}
+nav ul li a:hover{background:rgba(57,255,20,0.02)}
+
+/* Repos and cards */
+.repo-card{background:transparent;color:#b6ffb6;opacity:0;transform:translateY(6px);transition:all 260ms ease}
+.repo-card.visible{opacity:1;transform:translateY(0)}
+.repo-card a{color:#33ff66;text-decoration:none}
+.repo-card a:hover{text-decoration:underline}
+
+/* Inputs & buttons */
+button, .btn{
+    background:transparent;
+    color:#33ff66;
+    border:1px solid rgba(51,255,102,0.18);
+    padding:6px 10px;
+    border-radius:4px;
+    cursor:pointer;
+    transition:transform 160ms ease, background 160ms ease;
+}
+button:hover{background:rgba(51,255,102,0.02);transform:translateY(-2px)}
+
+textarea{background:transparent;border:1px solid rgba(51,255,102,0.12);color:#b6ffb6;padding:8px;border-radius:4px}
+
+/* Use Fira Code for that hacker aesthetic */
+body{font-family: 'Fira Code', 'Courier New', Courier, monospace}
+
+
+/* Embedded images */
+#external-images img{max-width:100%;border:1px solid rgba(0,255,0,0.12);border-radius:4px}
+
+/* Prompt look */
+.prompt-line{font-family:inherit;color:#9fff9f}
+.prompt-line::before{content:"$ ";color:#33ff66;margin-right:6px}
+
+/* Small responsive tweaks */
+@media (max-width:600px){
+    .container{padding:12px;margin:10px}
+    .title h1{font-size:0.9rem}
+}
+
+/* subtle caret animation for headings */
+.caret{display:inline-block;width:8px;background:#33ff66;margin-left:6px;height:16px;vertical-align:middle;animation:blink 1s steps(2,end) infinite}
+@keyframes blink{50%{opacity:0}}

@@ -1,46 +1,138 @@
-const Whoami = document.querySelector("#whoami");
-const Repositories = document.querySelector("#repositories");
-const Demos = document.querySelector("#demos");
-const aboutWhomai = document.querySelector("#about-whoami");
+// Main portfolio JS: Winbox mounts, GitHub repo fetching, and external-image embedding
+
+const whoamiBtn = document.querySelector("#whoami");
+const repositoriesBtn = document.querySelector("#repositories");
+const demosBtn = document.querySelector("#demos");
+
+const aboutWhoami = document.querySelector("#about-whoami");
 const aboutRepositories = document.querySelector("#about-repositories");
 const aboutDemos = document.querySelector("#about-demos");
 
-// Add event listeners to the buttons
-Whoami.addEventListener("click", () => {
-    const boutabe = new Winbox({
-        title: "Whoami",
-        width: "500px",
-        height: "500px",
+const githubUsernameInput = document.querySelector("#github-username");
+const githubTokenInput = document.querySelector("#github-token");
+const saveTokenCheckbox = document.querySelector("#save-token");
+const fetchReposBtn = document.querySelector("#fetch-repos");
+const githubReposNodes = document.querySelectorAll("#github-repos");
+
+const imageUrlsTextarea = document.querySelector("#image-urls");
+const embedImagesBtn = document.querySelector("#embed-images");
+const externalImagesDiv = document.querySelector("#external-images");
+
+function openWinbox(title, mountEl) {
+    new Winbox({
+        title,
+        width: "700px",
+        height: "60vh",
         top: 50,
         right: 50,
         bottom: 50,
         left: 50,
-        mount: aboutWhomai,
+        mount: mountEl,
     });
 }
 
-);
-Repositories.addEventListener("click", () => {
-    const boutabe = new Winbox({
-        title: "Repositories",
-        width: "500px",
-        height: "500px",
-        top: 50,
-        right: 50,
-        bottom: 50,
-        left: 50,
-        mount: aboutRepositories,
+if (whoamiBtn && aboutWhoami) whoamiBtn.addEventListener("click", () => openWinbox("Whoami", aboutWhoami));
+if (repositoriesBtn && aboutRepositories) repositoriesBtn.addEventListener("click", () => openWinbox("Repositories", aboutRepositories));
+if (demosBtn && aboutDemos) demosBtn.addEventListener("click", () => openWinbox("Demos", aboutDemos));
+
+// GitHub fetching
+async function fetchRepos(username) {
+    if (!username) return renderRepos([]);
+    try {
+        const url = `https://api.github.com/users/${encodeURIComponent(username)}/repos?sort=updated&per_page=100`;
+        const headers = { Accept: "application/vnd.github.v3+json" };
+        const token = (githubTokenInput && githubTokenInput.value && githubTokenInput.value.trim()) || localStorage.getItem("github_token") || "";
+        if (token) headers.Authorization = `token ${token}`;
+        const res = await fetch(url, { headers });
+        if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+        const data = await res.json();
+        renderRepos(data);
+    } catch (err) {
+        // Provide a helpful message if rate limited
+        if (err.message && err.message.includes("403")) {
+            renderError("Rate limited by GitHub API. Try adding a personal access token in the Repositories panel.");
+        } else {
+            renderError(err.message);
+        }
+    }
+}
+
+function renderError(message) {
+    githubReposNodes.forEach((node) => {
+        node.innerHTML = `<div style="color:tomato">${message}</div>`;
     });
-});
-Demos.addEventListener("click", () => {
-    const boutabe = new Winbox({
-        title: "Demos",
-        width: "500px",
-        height: "500px",
-        top: 50,
-        right: 50,
-        bottom: 50,
-        left: 50,
-        mount: aboutDemos,
+}
+
+function renderRepos(repos) {
+    const html = repos
+        .map((r) => {
+            return `
+                <div class="repo-card" style="border:1px solid #0f0;padding:8px;margin:8px 0;border-radius:4px;">
+                    <a href="${r.html_url}" target="_blank" style="color:#0f0;font-weight:bold">${r.name}</a>
+                    <div style="font-size:0.9em;color:#9f9">${r.description || ""}</div>
+                    <div style="margin-top:6px;font-size:0.85em;color:#6f6">
+                        ${r.stargazers_count} • ${r.language || ""} • Updated ${new Date(r.updated_at).toLocaleDateString()}
+                    </div>
+                </div>
+            `;
+        })
+        .join("");
+
+    githubReposNodes.forEach((node) => (node.innerHTML = html || "<div>No repos found.</div>"));
+}
+
+// External image embedding
+function embedImageUrls(urls) {
+    externalImagesDiv.innerHTML = "";
+    urls.forEach((u) => {
+        const url = u.trim();
+        if (!url) return;
+        const wrapper = document.createElement("div");
+        wrapper.style.margin = "8px 0";
+        const img = document.createElement("img");
+        img.src = url;
+        img.alt = url;
+        img.style.maxWidth = "100%";
+        img.style.border = "1px solid #0f0";
+        img.onerror = () => {
+            wrapper.innerHTML = `<div style=\"color:tomato\">Failed to load: ${url}</div>`;
+        };
+        wrapper.appendChild(img);
+        externalImagesDiv.appendChild(wrapper);
     });
-});
+}
+
+// Events
+if (fetchReposBtn && githubUsernameInput) {
+    fetchReposBtn.addEventListener("click", () => {
+        // Persist token if requested
+        if (saveTokenCheckbox && githubTokenInput) {
+            if (saveTokenCheckbox.checked && githubTokenInput.value.trim()) {
+                localStorage.setItem("github_token", githubTokenInput.value.trim());
+            } else {
+                localStorage.removeItem("github_token");
+            }
+        }
+        fetchRepos(githubUsernameInput.value.trim());
+    });
+}
+
+if (embedImagesBtn && imageUrlsTextarea) {
+    embedImagesBtn.addEventListener("click", () => {
+        const lines = imageUrlsTextarea.value.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+        embedImageUrls(lines);
+    });
+}
+
+// Auto-fetch for initial username if present
+// Restore token preference
+if (githubTokenInput) {
+    const saved = localStorage.getItem("github_token");
+    if (saved) {
+        githubTokenInput.value = saved;
+        if (saveTokenCheckbox) saveTokenCheckbox.checked = true;
+    }
+}
+
+const defaultUser = (githubUsernameInput && githubUsernameInput.value) || "";
+if (defaultUser) fetchRepos(defaultUser);
