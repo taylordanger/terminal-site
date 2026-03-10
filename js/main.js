@@ -37,9 +37,9 @@ function revealMount(mountEl) {
 function openWinbox(title, mountEl) {
     revealMount(mountEl);
     new WinBox({
-        title,
+        title: title,
         width: "700px",
-        height: "78vh",
+        height: "657vh",
         top: 50,
         right: 50,
         bottom: 50,
@@ -47,14 +47,15 @@ function openWinbox(title, mountEl) {
         mount: mountEl,
         border: true,
         borderColor: "#000",
-        borderwidth: "2px",
+        borderWidth: "2px",
         background: "#000",
 
         onfocus: function () {
-            this.setBackground("#0f0");
-    }
+            this.setBackground("#000");
+        }
+    });
 }
-);
+
     // If the mounted element contains a terminal-style pre, animate its typing
     // delay slightly to ensure Winbox has mounted the element into the DOM
     setTimeout(() => {
@@ -63,8 +64,8 @@ function openWinbox(title, mountEl) {
         } catch (e) {
             /* ignore */
         }
-    }, 220);
-}
+    }, 100);
+
 
     if (whoamiBtn && aboutWhoami) whoamiBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -84,7 +85,7 @@ function openWinbox(title, mountEl) {
 });
 if (resumeBtn && aboutResume) {
     resumeBtn.addEventListener("click", async (e) => {
-        e.preventDefault();
+        e.preventDefault();``
         revealMount(aboutResume);
 
         const pre = aboutResume.querySelector(".terminal-block");

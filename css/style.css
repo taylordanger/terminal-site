@@ -88,7 +88,7 @@ html, body {
     background: linear-gradient(180deg, rgba(0,0,0,0.85), rgba(3,3,3,0.98));
     border: 1px solid rgba(0,255,0,0.12);
     box-shadow: 0 8px 30px rgba(0,255,0,0.03);
-    border-radius: 6px;
+    border-radius: 0px;
 }
 /* Section spacing and headings */
 main.container h2{color:#aaffb3;margin:0 0 8px 0;font-weight:600}
@@ -96,7 +96,7 @@ main.container section{margin:12px 0;padding:10px 0;border-top:1px dashed rgba(5
 
 /* Form layout for username/token */
 .input-row{display:flex;gap:8px;align-items:center;margin-top:8px}
-.input-row input[type="text"],.input-row input[type="password"], input#github-username{flex:1;min-width:150px;padding:8px;border-radius:4px;border:1px solid rgba(51,255,102,0.12);background:transparent;color:#b6ffb6}
+.input-row input[type="text"],.input-row input[type="password"], input#github-username{flex:1;min-width:150px;padding:8px;border-radius:0px;border:1px solid rgba(51,255,102,0.12);background:transparent;color:#b6ffb6}
 .input-row button{flex:0 0 auto}
 
 /* Repos container */
@@ -150,7 +150,7 @@ button, .btn{
 }
 button:hover{background:rgba(51,255,102,0.02);transform:translateY(-2px)}
 
-textarea{background:transparent;border:1px solid rgba(51,255,102,0.12);color:#b6ffb6;padding:8px;border-radius:4px}
+textarea{background:transparent;border:1px solid rgba(51,255,102,0.12);color:#b6ffb6;padding:8px;border-radius:0px}
 
 /* Use Fira Code for that hacker aesthetic */
 body{font-family: 'Fira Code', 'Courier New', Courier, monospace}
@@ -176,15 +176,15 @@ body{font-family: 'Fira Code', 'Courier New', Courier, monospace}
 /* Terminal-style pre block for profile/diagnostics */
 .terminal-block{
     background: linear-gradient(180deg,#001100,#001400);
-    color: #9fff9f;
+    color: #33ff66;
     padding: 14px;
-    border-radius: 6px;
+    border-radius: 0px;
     border: 1px solid rgba(51,255,102,0.06);
     /* fallbacks for good box-drawing character support */
     font-family: 'Fira Code', 'DejaVu Sans Mono', 'Noto Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.08;
-    white-space: pre;
+    white-space: none;
     overflow:auto;
     box-shadow: inset 0 0 30px rgba(0,255,0,0.02);
     /* disable ligatures so characters like '█' render individually */
