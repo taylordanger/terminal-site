@@ -82,11 +82,11 @@ $ ./run_diagnostics.sh --stack
                         <div id="about-repositories" style="display:true">
                                 <h2>Repositories</h2>
                                 <label for="github-username">GitHub username:</label>
-                                <input id="github-username" value="taylordanger" />
+                                <input id="github-username" name="github-username" value="taylordanger" />
                                 <label for="github-token" style="margin-top:8px;display:block">GitHub token (optional):</label>
-                                <input id="github-token" type="password" placeholder="Personal access token (optional)" />
+                                <input id="github-token" name="github-token" type="password" placeholder="Personal access token (optional)" />
                                 <div style="margin-top:6px;display:flex;gap:8px;align-items:center">
-                                    <label style="display:flex;gap:6px;align-items:center"><input id="save-token" type="checkbox" /> Save token to this device</label>
+                                    <label style="display:flex;gap:6px;align-items:center"><input id="save-token" name="save-token" type="checkbox" /> Save token to this device</label>
                                     <button id="fetch-repos">Fetch Repos</button>
                                 </div>
                                 <div id="github-repos"></div>
@@ -95,7 +95,7 @@ $ ./run_diagnostics.sh --stack
             <div id="about-demos" style="display:none">
                 <h2>Demos & Embedded Images</h2>
                 <p>Paste image URLs (one per line) to embed below:</p>
-                <textarea id="image-urls" rows="4" style="width:100%"></textarea>
+                <textarea id="image-urls" name="image-urls" rows="4" style="width:100%"></textarea>
                 <button id="embed-images">Embed Images</button>
                 <div id="external-images" style="margin-top:12px"></div>
             </div>
