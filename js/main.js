@@ -109,22 +109,50 @@ function openWinbox(title, mountEl) {
             console.error('openWinbox failed:', err);
         }
 
-        // Asynchronously extract PDF text and animate it when ready
+        // Asynchronously load resume text: prefer a pre-extracted TXT file, fall back to pdf.js
         (async () => {
             try {
-                const url = 'assets/resume.pdf';
-                console.log('extracting resume text from', url);
-                const text = await extractPdfText(url);
-                console.log('resume text extracted, length=', (text && text.length) || 0);
-                pre.dataset.full = text || 'No text extracted from PDF.';
-                pre.textContent = '';
-                pre.dataset.typed = 'false';
-                // re-run animateTerminal to type the loaded resume
-                animateTerminal(aboutResume, 10);
+                const txtUrl = 'assets/resume.txt';
+                let text = null;
+                // Try loading plain text first (fast, avoids pdf.js issues)
+                try {
+                    const r = await fetch(txtUrl, { cache: 'no-cache' });
+                    if (r.ok) {
+                        text = await r.text();
+                        console.log('Loaded resume text from', txtUrl, 'length=', (text && text.length) || 0);
+                    } else {
+                        console.log('No resume.txt found (status)', r.status);
+                    }
+                } catch (e) {
+                    console.warn('Error fetching resume.txt:', e && e.message);
+                }
+
+                // If no text file, attempt PDF extraction (may fail in some browsers/OS)
+                if (!text) {
+                    try {
+                        const url = 'assets/resume.pdf';
+                        console.log('Falling back to pdf extraction for', url);
+                        text = await extractPdfText(url);
+                        console.log('pdf extraction succeeded, length=', (text && text.length) || 0);
+                    } catch (pdfErr) {
+                        console.warn('PDF text extraction failed:', pdfErr && pdfErr.message ? pdfErr.message : pdfErr);
+                    }
+                }
+
+                if (text) {
+                    pre.dataset.full = text;
+                    pre.textContent = '';
+                    pre.dataset.typed = 'false';
+                    // re-run animateTerminal to type the loaded resume
+                    animateTerminal(aboutResume, 10);
+                } else {
+                    pre.textContent = 'Failed to load resume text. Opening PDF as fallback.';
+                    // leave the PDF link available for manual open
+                    console.warn('No resume text available; user can open the PDF directly.');
+                }
             } catch (err) {
-                console.error('Failed to extract resume text:', err);
-                pre.textContent = 'Failed to extract resume text: ' + (err && err.message ? err.message : String(err));
-                // as last resort, open raw PDF if user clicks the link (leave progressive enhancement)
+                console.error('Unexpected error loading resume text:', err);
+                pre.textContent = 'Unexpected error loading resume text.' + (err && err.message ? '\n' + err.message : '');
             }
         })();
     });
