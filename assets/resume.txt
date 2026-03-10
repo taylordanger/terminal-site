@@ -1,129 +1,158 @@
-Contact
-9723456145 (Mobile)
-taylordangersheppard@gmail.
-com
-www.linkedin.com/in/
-taylorsheppard (LinkedIn)
-taylorsheppard.wixsite.com/taylor
-(Personal)
-github.com/taylordanger (Personal)
-Top Skills
-Networking
-Subnetting
-Product Development
-Certifications
-Hands-on Introduction to Linux
-Commands and Shell Scripting
-Introduction to Software Engineering
-Microsoft Azure for Data Engineering
-Introduction to Cloud Computing
-Application Security and Monitoring
-Taylor Sheppard
-Computer Science Student | Software Development | IT Support |
-Python, C, SQL | Cloud & Agile Foundations
-United States
-Summary
-I’m a Computer Science student with a background in IT support,
-customer-facing leadership, and creative technology. My experience
-ranges from troubleshooting enterprise systems to leading retail
-operations and managing creative production teams. I’m building
-strong foundations in software development, systems administration,
-and cloud computing.
-Core Skills & Interests:
-Programming & Tools: Python, C, Java, SQL, HTML, CSS, Git
-Systems & Platforms: Linux, Azure, Windows Server, POS Systems
-Methodologies: Agile, ITIL, Cloud Computing, Software Engineering
-Principles
-Strengths: Troubleshooting, Technical Support, Process
-Improvement, Team Leadership
-I’m seeking opportunities in software development, IT support, or
-technical roles where I can apply both technical skills and problem-
-solving to deliver impactful solutions.
-Experience
-Starbucks
-Retail Shift Supervisor
-December 2018 - December 2023 (5 years 1 month)
-Dallas-Fort Worth Metroplex
-Directed daily operations for a high-volume store, leading and mentoring a
-team of 12+ employees.
-Oversaw scheduling, cash handling, and digital inventory systems.
-  Page 1 of 4
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                              TAYLOR SHEPPARD                               │
+│     Computer Science Student • Software Development • IT Support           │
+│              Python • C • SQL • Cloud • Agile Foundations                  │
+└──────────────────────────────────────────────────────────────────────────────┘
 
-   
-Trained team members on compliance tools, POS troubleshooting, and
-customer engagement.
-Resolved escalated customer concerns, consistently maintaining high
-satisfaction scores.
-Implemented process improvements leveraging digital platforms that boosted
-team efficiency.
-Mecca Design & Production
-1 year 7 months
-Graphics Department Manager
-February 2017 - April 2018 (1 year 3 months)
-Dallas/Fort Worth Area
-Managed day-to-day operations of the graphics production department,
-supervising a team of production staff.
-Operated and maintained digital print production equipment (Roland
-VersaCAMM, cutting/lamination systems) and resolved technical issues to
-minimize downtime.
-Coordinated large-scale installations of graphics and design projects, ensuring
-technical accuracy, safety, and client specifications.
-Oversaw digital file prep, prepress workflows, and software troubleshooting for
-design-to-production pipelines.
-Delivered projects for high-profile clients under tight deadlines with consistent
-quality control.
-Graphic/Production Artist Assistant
-October 2016 - February 2017 (5 months)
-Dallas/Fort Worth Area
-Operated digital printing, cutting, and lamination equipment to support
-production workflows.
-Assisted in prepress preparation, software troubleshooting, and color
-management for print accuracy.
-  Page 2 of 4
+Name:      Taylor Sheppard
+Location:  United States
+Status:    Open to software development, IT support, and technical roles
 
-   
-Supported on-site installation of graphics, collaborating with cross-functional
-teams to meet client needs.
-FairWay Technology
-IT Helpdesk Analyst
-June 2015 - February 2016 (9 months)
-Dallas/Fort Worth Area
-Delivered Tier 1 technical support for hardware, software, and networking
-issues in a call-center environment.
-Supported Windows OS, retail POS systems, and enterprise applications.
-Assisted with onboarding, account setup, and Active Directory administration.
-Documented and escalated incidents using ticketing systems in alignment with
-ITIL procedures.
-Collaborated with Tier 2 teams to resolve escalated technical issues.
-Billings Productions (The Dinosaur Company)
-Technician Trainer (Supervisor)
-2014 - June 2015 (1 year)
-Designed and delivered technical training programs for installation and field
-service teams.
-Supervised shop technicians and prepared them for field deployment on
-international projects.
-Led teams in the installation, calibration, and repair of animatronic exhibits,
-ensuring mechanical, electrical, and software systems functioned reliably.
-Documented workflows and developed troubleshooting guides to improve
-service efficiency.
-Billings Productions (The Dinosaur Company)
-Sculptor/Field Service Tech
-October 2012 - August 2013 (11 months)
-Contributed to fabrication by sculpting and painting animatronic exhibits with
-mechanical and electronic integration.
-  Page 3 of 4
+$ cat contact.info
+Mobile    : 972-345-6145
+Email     : taylordangersheppard@gmail.com
+LinkedIn  : www.linkedin.com/in/taylorsheppard
+Portfolio : taylorsheppard.wixsite.com/taylor
+GitHub    : github.com/taylordanger
 
-   
-Performed on-site installation, repair, and preventative maintenance for exhibit
-environments.
-Collaborated with engineering teams to diagnose and resolve hardware/
-software issues in animatronic systems.
-Assisted in testing and quality control to ensure functionality and safety in field
-deployments.
-Education
+$ grep -r "core_strengths" ~/profile/skills.txt
+Networking            : enabled
+Subnetting            : enabled
+Product Development   : enabled
+Troubleshooting       : enabled
+Technical Support     : enabled
+Process Improvement   : enabled
+Team Leadership       : enabled
+
+------------------------------------------------------------------------------
+SYSTEM PROFILE
+------------------------------------------------------------------------------
+
+I am a Computer Science student with a background in IT support,
+customer-facing leadership, and creative technology. My experience spans
+enterprise troubleshooting, retail operations leadership, and creative
+production management.
+
+Current focus:
+- Building strong foundations in software development
+- Expanding systems administration and cloud computing skills
+- Applying technical problem-solving to real-world operational challenges
+
+$ ./load_skill_matrix.sh --summary
+
+╔═══════════════════════[ TECHNICAL STACK ]══════════════════════════════════╗
+║                                                                            ║
+║  PROGRAMMING & TOOLS                                                       ║
+║  Python              ███████████████░░   Strong                            ║
+║  C                   ██████████████░░░   Strong                            ║
+║  Java                ███████████░░░░░░   Working Knowledge                 ║
+║  SQL                 █████████████░░░░   Proficient                        ║
+║  HTML/CSS            ███████████░░░░░░   Working Knowledge                 ║
+║  Git                 █████████████░░░░   Proficient                        ║
+║                                                                            ║
+║  SYSTEMS & PLATFORMS                                                       ║
+║  Linux               █████████████░░░░   Proficient                        ║
+║  Azure               ███████████░░░░░░   Developing                        ║
+║  Windows Server      ███████████░░░░░░   Working Knowledge                 ║
+║  POS Systems         ███████████████░░   Strong                            ║
+║                                                                            ║
+║  METHODS & PRACTICES                                                       ║
+║  Agile               █████████████░░░░   Proficient                        ║
+║  ITIL                ███████████░░░░░░   Working Knowledge                 ║
+║  Cloud Computing     ███████████░░░░░░   Developing                        ║
+║  Software Eng.       ███████████░░░░░░   Developing                        ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+$ ls certifications/
+
+[OK] Hands-on Introduction to Linux Commands and Shell Scripting
+[OK] Introduction to Software Engineering
+[OK] Microsoft Azure for Data Engineering
+[OK] Introduction to Cloud Computing
+[OK] Application Security and Monitoring
+
+------------------------------------------------------------------------------
+EXPERIENCE LOG
+------------------------------------------------------------------------------
+
+$ tail -n +1 experience.log
+
+[2018-12 -> 2023-12] Starbucks
+Role: Retail Shift Supervisor
+Region: Dallas-Fort Worth Metroplex
+
+> Directed daily operations for a high-volume store
+> Led and mentored 12+ team members
+> Oversaw scheduling, cash handling, and digital inventory systems
+> Trained staff on compliance tools, POS troubleshooting, and customer service
+> Resolved escalated customer issues with consistently strong satisfaction
+> Improved team efficiency through better use of digital workflows
+
+[2017-02 -> 2018-04] Mecca Design & Production
+Role: Graphics Department Manager
+Region: Dallas/Fort Worth Area
+
+> Managed day-to-day graphics production operations
+> Supervised production staff and maintained workflow quality
+> Operated and serviced digital print systems and finishing equipment
+> Solved technical issues to reduce downtime
+> Coordinated large-scale graphics installations with safety and accuracy
+> Oversaw file prep, prepress workflows, and design-to-production troubleshooting
+
+[2016-10 -> 2017-02] Mecca Design & Production
+Role: Graphic / Production Artist Assistant
+Region: Dallas/Fort Worth Area
+
+> Supported digital printing, cutting, and lamination workflows
+> Assisted with prepress prep, software troubleshooting, and color management
+> Helped install graphics projects with cross-functional teams on site
+
+[2015-06 -> 2016-02] FairWay Technology
+Role: IT Helpdesk Analyst
+Region: Dallas/Fort Worth Area
+
+> Delivered Tier 1 support for hardware, software, and network issues
+> Supported Windows OS, retail POS systems, and enterprise applications
+> Assisted with onboarding, account setup, and Active Directory administration
+> Logged and escalated incidents through ticketing systems using ITIL processes
+> Worked with Tier 2 teams to resolve higher-complexity issues
+
+[2014 -> 2015-06] Billings Productions (The Dinosaur Company)
+Role: Technician Trainer / Supervisor
+
+> Designed and delivered technical training for field service teams
+> Supervised shop technicians and prepared them for international deployment
+> Led installation, calibration, and repair of animatronic exhibits
+> Documented workflows and built troubleshooting guides for service efficiency
+
+[2012-10 -> 2013-08] Billings Productions (The Dinosaur Company)
+Role: Sculptor / Field Service Tech
+
+> Built and finished animatronic exhibit components
+> Performed installation, repair, and preventative maintenance on site
+> Worked with engineering teams on hardware/software issue diagnosis
+> Assisted in testing and quality control for safety and reliability
+
+------------------------------------------------------------------------------
+EDUCATION
+------------------------------------------------------------------------------
+
+$ cat education.txt
+
 Oregon Coast Community College
-Associates of Science Transfer - Computer Science, Computer Science · (April
-2024 - April 2026)
+Associate of Science Transfer, Computer Science
+2024-04 -> 2026-04
+
 University of North Texas
-Bachelor of Fine Arts (B.F.A.), Painting and Drawing · (2010 - 2012)
-  Page 4 of 4
+Bachelor of Fine Arts, Painting and Drawing
+2010 -> 2012
+
+------------------------------------------------------------------------------
+MISSION STATEMENT
+------------------------------------------------------------------------------
+
+Seeking opportunities in software development, IT support, and other
+technical roles where I can combine hands-on troubleshooting, systems
+thinking, and leadership experience to deliver practical, high-impact
+solutions.

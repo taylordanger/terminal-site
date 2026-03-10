@@ -23,11 +23,23 @@ const imageUrlsTextarea = document.querySelector("#image-urls");
 const embedImagesBtn = document.querySelector("#embed-images");
 const externalImagesDiv = document.querySelector("#external-images");
 
+let resumeTextPromise = null;
+
+function revealMount(mountEl) {
+    if (!mountEl) return;
+    mountEl.classList.add("mounted");
+    mountEl.style.display = "block";
+    mountEl.style.visibility = "visible";
+    mountEl.style.height = "auto";
+    mountEl.style.overflow = "auto";
+}
+
 function openWinbox(title, mountEl) {
+    revealMount(mountEl);
     new WinBox({
         title,
         width: "700px",
-        height: "618vh",
+        height: "78vh",
         top: 50,
         right: 50,
         bottom: 50,
@@ -57,105 +69,48 @@ function openWinbox(title, mountEl) {
     if (whoamiBtn && aboutWhoami) whoamiBtn.addEventListener("click", (e) => {
     e.preventDefault();
     console.log('whoami clicked');
-    aboutWhoami.classList.add('mounted');
-    aboutWhoami.style.visibility = 'visible';
-    aboutWhoami.style.height = 'auto';
+    revealMount(aboutWhoami);
     openWinbox("Whoami", aboutWhoami);
 });
     if (repositoriesBtn && aboutRepositories) repositoriesBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    aboutRepositories.classList.add('mounted');
-    aboutRepositories.style.visibility = 'visible';
-    aboutRepositories.style.height = 'auto';
+    revealMount(aboutRepositories);
     openWinbox("Repositories", aboutRepositories);
 });
     if (demosBtn && aboutDemos) demosBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    aboutDemos.classList.add('mounted');
-    aboutDemos.style.visibility = 'visible';
-    aboutDemos.style.height = 'auto';
+    revealMount(aboutDemos);
     openWinbox("Demos", aboutDemos);
 });
-    // Resume button behavior (with debug logging and fallback)
-    if (resumeBtn) resumeBtn.addEventListener("click", (e) => {
+if (resumeBtn && aboutResume) {
+    resumeBtn.addEventListener("click", async (e) => {
         e.preventDefault();
-        console.log('resume clicked');
-        if (!aboutResume) {
-            console.warn('aboutResume node not found; opening raw PDF');
-            window.open('assets/resume.pdf', '_blank');
+        revealMount(aboutResume);
+
+        const pre = aboutResume.querySelector(".terminal-block");
+        openWinbox("Resume", aboutResume);
+
+        if (!pre || pre.dataset.loaded === "true") {
             return;
         }
-        // Ensure mount visible
-        aboutResume.classList.add('mounted');
-        aboutResume.style.visibility = 'visible';
-        aboutResume.style.height = 'auto';
 
-        // Ensure there's a terminal pre to type into
-        let pre = aboutResume.querySelector('.terminal-block');
-        if (!pre) {
-            pre = document.createElement('pre');
-            pre.className = 'terminal-block';
-            pre.textContent = 'Loading resume...';
-            aboutResume.appendChild(pre);
-        } else {
-            pre.textContent = 'Loading resume...';
-        }
+        pre.textContent = "$ cat assets/resume.txt\nLoading resume...";
 
-        // Open the window immediately (will mount the node)
         try {
-            console.log('attempting openWinbox for resume');
-            openWinbox("Resume", aboutResume);
+            const text = await loadResumeText();
+            pre.dataset.full = text;
+            pre.dataset.typed = "false";
+            pre.dataset.loaded = "true";
+            pre.textContent = "";
+            animateTerminal(aboutResume, 6);
         } catch (err) {
-            console.error('openWinbox failed:', err);
+            pre.dataset.loaded = "false";
+            pre.textContent = "$ cat assets/resume.txt\nUnable to load resume text. Opening PDF fallback...";
+            window.open("assets/resume.pdf", "_blank", "noopener");
+            console.error("Resume load failed:", err);
         }
-
-        // Asynchronously load resume text: prefer a pre-extracted TXT file, fall back to pdf.js
-        (async () => {
-            try {
-                const txtUrl = 'assets/resume.txt';
-                let text = null;
-                // Try loading plain text first (fast, avoids pdf.js issues)
-                try {
-                    const r = await fetch(txtUrl, { cache: 'no-cache' });
-                    if (r.ok) {
-                        text = await r.text();
-                        console.log('Loaded resume text from', txtUrl, 'length=', (text && text.length) || 0);
-                    } else {
-                        console.log('No resume.txt found (status)', r.status);
-                    }
-                } catch (e) {
-                    console.warn('Error fetching resume.txt:', e && e.message);
-                }
-
-                // If no text file, attempt PDF extraction (may fail in some browsers/OS)
-                if (!text) {
-                    try {
-                        const url = 'assets/resume.pdf';
-                        console.log('Falling back to pdf extraction for', url);
-                        text = await extractPdfText(url);
-                        console.log('pdf extraction succeeded, length=', (text && text.length) || 0);
-                    } catch (pdfErr) {
-                        console.warn('PDF text extraction failed:', pdfErr && pdfErr.message ? pdfErr.message : pdfErr);
-                    }
-                }
-
-                if (text) {
-                    pre.dataset.full = text;
-                    pre.textContent = '';
-                    pre.dataset.typed = 'false';
-                    // re-run animateTerminal to type the loaded resume
-                    animateTerminal(aboutResume, 10);
-                } else {
-                    pre.textContent = 'Failed to load resume text. Opening PDF as fallback.';
-                    // leave the PDF link available for manual open
-                    console.warn('No resume text available; user can open the PDF directly.');
-                }
-            } catch (err) {
-                console.error('Unexpected error loading resume text:', err);
-                pre.textContent = 'Unexpected error loading resume text.' + (err && err.message ? '\n' + err.message : '');
-            }
-        })();
     });
+}
 
 // GitHub fetching
 async function fetchRepos(username) {
@@ -299,6 +254,32 @@ async function extractPdfText(url) {
         fullText += strs + '\n\n';
     }
     return fullText.trim();
+}
+
+async function loadResumeText() {
+    if (!resumeTextPromise) {
+        resumeTextPromise = (async () => {
+            try {
+                const response = await fetch("assets/resume.txt", { cache: "no-cache" });
+                if (response.ok) {
+                    return await response.text();
+                }
+            } catch (error) {
+                console.warn("Fetching resume.txt failed:", error);
+            }
+
+            const pdfText = await extractPdfText("assets/resume.pdf");
+            if (!pdfText) {
+                throw new Error("Resume text and PDF extraction both failed");
+            }
+            return pdfText;
+        })().catch((error) => {
+            resumeTextPromise = null;
+            throw error;
+        });
+    }
+
+    return resumeTextPromise;
 }
 
 
