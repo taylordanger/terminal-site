@@ -3,10 +3,12 @@
 const whoamiBtn = document.querySelector("#whoami");
 const repositoriesBtn = document.querySelector("#repositories");
 const demosBtn = document.querySelector("#demos");
+const resumeBtn = document.querySelector("#resumeBtn");
 
 const aboutWhoami = document.querySelector("#about-whoami");
 const aboutRepositories = document.querySelector("#about-repositories");
 const aboutDemos = document.querySelector("#about-demos");
+const aboutResume = document.querySelector("#about-resume");
 
 const githubUsernameInput = document.querySelector("#github-username");
 const githubTokenInput = document.querySelector("#github-token");
@@ -71,6 +73,14 @@ function openWinbox(title, mountEl) {
     aboutDemos.style.height = 'auto';
     openWinbox("Demos", aboutDemos);
 });
+    // Resume button behavior
+    if (resumeBtn && aboutResume) resumeBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        aboutResume.classList.add('mounted');
+        aboutResume.style.visibility = 'visible';
+        aboutResume.style.height = 'auto';
+        openWinbox("Resume", aboutResume);
+    });
 
 // GitHub fetching
 async function fetchRepos(username) {

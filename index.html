@@ -28,6 +28,7 @@
                 <li><a id="whoami" href="#">/Whoami</a></li>
                 <li><a id="repositories" href="#">/Repositories</a></li>
                 <li><a id="demos" href="#">/DEMOS</a></li>
+                <li><a id="resumeBtn" href="#">/Resume</a></li>
             </ul>
         </nav>
 
@@ -97,6 +98,16 @@ $ ./run_diagnostics.sh --stack
                 <textarea id="image-urls" rows="4" style="width:100%"></textarea>
                 <button id="embed-images">Embed Images</button>
                 <div id="external-images" style="margin-top:12px"></div>
+            </div>
+
+            <!-- Resume mount point: drop a resume PDF at assets/resume.pdf to display here -->
+            <div id="about-resume" style="display:none">
+                <h2>Resume</h2>
+                <div style="width:100%;height:520px;">
+                    <iframe id="resume-iframe" src="assets/resume.pdf" style="width:100%;height:100%;border:0;" title="Resume PDF">
+                    </iframe>
+                    <div style="color:#9f9;margin-top:8px">If the PDF doesn't load, add <strong>assets/resume.pdf</strong> to the repo.</div>
+                </div>
             </div>
 
             <!-- Default visible content: quick repo list -->
