@@ -82,28 +82,48 @@ function openWinbox(title, mountEl) {
             window.open('assets/resume.pdf', '_blank');
             return;
         }
+        // Ensure mount visible
         aboutResume.classList.add('mounted');
         aboutResume.style.visibility = 'visible';
         aboutResume.style.height = 'auto';
+
+        // Ensure there's a terminal pre to type into
+        let pre = aboutResume.querySelector('.terminal-block');
+        if (!pre) {
+            pre = document.createElement('pre');
+            pre.className = 'terminal-block';
+            pre.textContent = 'Loading resume...';
+            aboutResume.appendChild(pre);
+        } else {
+            pre.textContent = 'Loading resume...';
+        }
+
+        // Open the window immediately (will mount the node)
         try {
             console.log('attempting openWinbox for resume');
             openWinbox("Resume", aboutResume);
-            return;
         } catch (err) {
             console.error('openWinbox failed:', err);
         }
-        // fallback: try window.open, detect popup blocking, then navigate as last resort
-        try {
-            console.log('falling back to window.open for resume.pdf');
-            const win = window.open('assets/resume.pdf', '_blank');
-            if (!win) {
-                console.warn('window.open returned null (popup blocked) — navigating to PDF');
-                window.location.href = 'assets/resume.pdf';
+
+        // Asynchronously extract PDF text and animate it when ready
+        (async () => {
+            try {
+                const url = 'assets/resume.pdf';
+                console.log('extracting resume text from', url);
+                const text = await extractPdfText(url);
+                console.log('resume text extracted, length=', (text && text.length) || 0);
+                pre.dataset.full = text;
+                pre.textContent = '';
+                pre.dataset.typed = 'false';
+                // re-run animateTerminal to type the loaded resume
+                animateTerminal(aboutResume, 10);
+            } catch (err) {
+                console.error('Failed to extract resume text:', err);
+                // as last resort, open raw PDF
+                try { window.open('assets/resume.pdf', '_blank'); } catch (e) { window.location.href = 'assets/resume.pdf'; }
             }
-        } catch (err) {
-            console.error('window.open failed:', err, '— navigating to PDF');
-            window.location.href = 'assets/resume.pdf';
-        }
+        })();
     });
 
 // GitHub fetching
@@ -207,7 +227,8 @@ function animateTerminal(container, speed = 12) {
         return;
     }
 
-    const full = pre.textContent || '';
+    // prefer an explicit dataset.full (used when we load text asynchronously)
+    const full = (pre.dataset && pre.dataset.full) || pre.textContent || '';
     pre.dataset.full = full;
     pre.textContent = '';
     pre.dataset.typed = 'false';
@@ -230,6 +251,23 @@ function animateTerminal(container, speed = 12) {
             setTimeout(() => pre.classList.remove('typed-flash'), 900);
         }
     }, speed);
+}
+
+// Extract text from a PDF using pdf.js
+async function extractPdfText(url) {
+    if (!window['pdfjsLib']) throw new Error('pdfjsLib not loaded');
+    // set worker src to CDN worker
+    window['pdfjsLib'].GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+    const loadingTask = window['pdfjsLib'].getDocument(url);
+    const pdf = await loadingTask.promise;
+    let fullText = '';
+    for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        const strs = content.items.map((it) => it.str || '').join(' ');
+        fullText += strs + '\n\n';
+    }
+    return fullText.trim();
 }
 
 // Events
