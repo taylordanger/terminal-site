@@ -1,5 +1,8 @@
 // Main portfolio JS: Winbox mounts, GitHub repo fetching, and external-image embedding
 
+console.log('main.js loaded');
+console.log('pdfjsLib loaded?', !!window.pdfjsLib);
+
 const whoamiBtn = document.querySelector("#whoami");
 const repositoriesBtn = document.querySelector("#repositories");
 const demosBtn = document.querySelector("#demos");
@@ -113,15 +116,15 @@ function openWinbox(title, mountEl) {
                 console.log('extracting resume text from', url);
                 const text = await extractPdfText(url);
                 console.log('resume text extracted, length=', (text && text.length) || 0);
-                pre.dataset.full = text;
+                pre.dataset.full = text || 'No text extracted from PDF.';
                 pre.textContent = '';
                 pre.dataset.typed = 'false';
                 // re-run animateTerminal to type the loaded resume
                 animateTerminal(aboutResume, 10);
             } catch (err) {
                 console.error('Failed to extract resume text:', err);
-                // as last resort, open raw PDF
-                try { window.open('assets/resume.pdf', '_blank'); } catch (e) { window.location.href = 'assets/resume.pdf'; }
+                pre.textContent = 'Failed to extract resume text: ' + (err && err.message ? err.message : String(err));
+                // as last resort, open raw PDF if user clicks the link (leave progressive enhancement)
             }
         })();
     });
@@ -269,6 +272,7 @@ async function extractPdfText(url) {
     }
     return fullText.trim();
 }
+
 
 // Events
 if (fetchReposBtn && githubUsernameInput) {
