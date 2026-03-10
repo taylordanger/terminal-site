@@ -73,13 +73,25 @@ function openWinbox(title, mountEl) {
     aboutDemos.style.height = 'auto';
     openWinbox("Demos", aboutDemos);
 });
-    // Resume button behavior
-    if (resumeBtn && aboutResume) resumeBtn.addEventListener("click", (e) => {
+    // Resume button behavior (with debug logging and fallback)
+    if (resumeBtn) resumeBtn.addEventListener("click", (e) => {
         e.preventDefault();
+        console.log('resume clicked');
+        if (!aboutResume) {
+            console.warn('aboutResume node not found; opening raw PDF');
+            window.open('assets/resume.pdf', '_blank');
+            return;
+        }
         aboutResume.classList.add('mounted');
         aboutResume.style.visibility = 'visible';
         aboutResume.style.height = 'auto';
-        openWinbox("Resume", aboutResume);
+        try {
+            openWinbox("Resume", aboutResume);
+        } catch (err) {
+            console.error('openWinbox failed:', err);
+            // fallback to opening the PDF directly
+            window.open('assets/resume.pdf', '_blank');
+        }
     });
 
 // GitHub fetching
