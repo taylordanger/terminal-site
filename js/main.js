@@ -86,11 +86,23 @@ function openWinbox(title, mountEl) {
         aboutResume.style.visibility = 'visible';
         aboutResume.style.height = 'auto';
         try {
+            console.log('attempting openWinbox for resume');
             openWinbox("Resume", aboutResume);
+            return;
         } catch (err) {
             console.error('openWinbox failed:', err);
-            // fallback to opening the PDF directly
-            window.open('assets/resume.pdf', '_blank');
+        }
+        // fallback: try window.open, detect popup blocking, then navigate as last resort
+        try {
+            console.log('falling back to window.open for resume.pdf');
+            const win = window.open('assets/resume.pdf', '_blank');
+            if (!win) {
+                console.warn('window.open returned null (popup blocked) — navigating to PDF');
+                window.location.href = 'assets/resume.pdf';
+            }
+        } catch (err) {
+            console.error('window.open failed:', err, '— navigating to PDF');
+            window.location.href = 'assets/resume.pdf';
         }
     });
 
